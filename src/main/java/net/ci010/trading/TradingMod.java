@@ -31,10 +31,5 @@ public class TradingMod
 	{
 	}
 	
-	@EventHandler
-	public void postInit(FMLPostInitializationEvent event)
-	{
-
-	}
 
 }
