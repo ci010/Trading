@@ -1,6 +1,6 @@
 package net.ci010.trading.client.gui.inventory;
 
-import net.ci010.trading.common.inventory.ContainerItemExchange;
+import net.ci010.trading.common.inventory.ContainerTrade;
 import net.ci010.trading.network.AcceptTradeMesssage;
 import net.ci010.trading.network.PacketDispatcher;
 import net.minecraft.client.gui.GuiButton;
@@ -55,7 +55,7 @@ public class GuiTrade extends GuiContainer
 										30,
 										(float) (this.width - 105) - this.oldMouseX,
 										(float) (this.guiTop + 10) - this.oldMouseY,
-										((ContainerItemExchange)this.inventorySlots).getTrade().getOtherSide(this.mc.thePlayer));
+										((ContainerTrade)this.inventorySlots).getTrade().getOtherSide(this.mc.thePlayer));
 		
 	}
 
