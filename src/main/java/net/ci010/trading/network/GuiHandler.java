@@ -25,9 +25,11 @@ public class GuiHandler implements IGuiHandler
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
 	{
+		
 		switch (ID)
 		{
 			case 0:
+				System.out.println("try to return a gui container");
 				return new GuiTrade(new ContainerTrade(player.inventory, TradingSystem.getPlayerTrade(player)));
 			case 1:
 
