@@ -1,6 +1,5 @@
 package net.ci010.trading.network;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -20,7 +19,7 @@ public abstract class AbstractMessageHandler <T extends IMessage> implements IMe
 	{
 		if (ctx.side.isClient())
 		{
-			return handleClientMessage(Minecraft.getMinecraft().thePlayer, message, ctx);
+			return handleClientMessage(ctx.getServerHandler().playerEntity, message, ctx);
 		}
 		else 
 		{
