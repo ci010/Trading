@@ -1,6 +1,10 @@
 package net.ci010.trading;
 
+import net.ci010.minecraftUtil.network.NetworkMod;
+import net.ci010.minecraftUtil.network.PacketDispatcher;
+import net.ci010.minecraftUtil.network.Proxy;
 import net.ci010.trading.common.CommonProxy;
+import net.ci010.trading.common.command.TestCommand;
 import net.ci010.trading.common.command.TradingCommand;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraftforge.fml.common.Mod;
@@ -12,7 +16,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.SidedProxy;
 
 @Mod(name = TradingMod.NAME, modid = TradingMod.MODID, version = TradingMod.VERSION)
-public class TradingMod
+public class TradingMod implements NetworkMod
 {
 	public static final String MODID = "tranding";
 	public static final String NAME = "Trading";
@@ -28,6 +32,7 @@ public class TradingMod
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		instance = this;
+		PacketDispatcher.initInstance(MODID, this);
 	}
 
 	@EventHandler
@@ -40,7 +45,14 @@ public class TradingMod
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event)
 	{
-		ServerCommandManager serverCommandManager = (ServerCommandManager) event.getServer().getCommandManager();
-		serverCommandManager.registerCommand(new TradingCommand());
+		ServerCommandManager serverCmdManager = (ServerCommandManager) event.getServer().getCommandManager();
+		serverCmdManager.registerCommand(new TradingCommand());
+		serverCmdManager.registerCommand(new TestCommand());
+	}
+
+	@Override
+	public Proxy getProxy()
+	{
+		return proxy;
 	}
 }

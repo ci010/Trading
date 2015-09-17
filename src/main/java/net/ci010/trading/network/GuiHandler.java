@@ -1,5 +1,6 @@
 package net.ci010.trading.network;
 
+import net.ci010.trading.client.gui.GuiRequest;
 import net.ci010.trading.client.gui.inventory.GuiTrade;
 import net.ci010.trading.common.TradingSystem;
 import net.ci010.trading.common.inventory.ContainerTrade;
@@ -25,14 +26,13 @@ public class GuiHandler implements IGuiHandler
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
 	{
-		
 		switch (ID)
 		{
 			case 0:
 				System.out.println("try to return a gui container");
 				return new GuiTrade(new ContainerTrade(player.inventory, TradingSystem.getPlayerTrade(player)));
 			case 1:
-
+				return new GuiRequest();
 		}
 		return null;
 	}

@@ -1,19 +1,19 @@
 package net.ci010.trading.common;
 
+import java.util.UUID;
+
+import net.ci010.trading.TradingMod;
 import net.ci010.trading.common.inventory.InventoryTrade;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class Trade implements IExchange
 {
-	int id;
-
 	public final Trader initiator;
 	public final Trader invitee;
 
-	public Trade(int id, EntityPlayer initiator, EntityPlayer invitee)
+	public Trade(EntityPlayer initiator, EntityPlayer invitee)
 	{
-		this.id = id;
 		this.initiator = new Trader(initiator);
 		this.invitee = new Trader(invitee);
 	}
@@ -37,10 +37,17 @@ public class Trade implements IExchange
 		}
 	}
 
+	public void start()
+	{
+		initiator.player.openGui(TradingMod.instance, 0, null, 0, 0, 0);
+		invitee.player.openGui(TradingMod.instance, 0, null, 0, 0, 0);
+	}
+
 	public boolean isInvolveTrade(EntityPlayer player)
 	{
-		return initiator.equals(player) || invitee.equals(player);
+		return initiator.player.getUniqueID().equals(player.getUniqueID()) || invitee.player.getUniqueID().equals(player.getUniqueID());
 	}
+	
 
 	public EntityPlayer getOtherSide(EntityPlayer player)
 	{
@@ -62,6 +69,16 @@ public class Trade implements IExchange
 			exchange();
 	}
 
+	public void ready(EntityPlayer player)
+	{
+		if (initiator.equals(player))
+			initiator.isReady = true;
+		if (invitee.equals(player))
+			invitee.isReady = true;
+		if (initiator.isReady && invitee.isReady)
+			start();
+	}
+
 	public boolean canFinishTrade()
 	{
 		return this.initiator.hasPlaceToExchange() && this.invitee.hasPlaceToExchange();
@@ -70,12 +87,18 @@ public class Trade implements IExchange
 	public class Trader
 	{
 		public final EntityPlayer player;
-		boolean isAccept;
+		// public final UUID uuid;
+		// public final int entityId;
+		boolean isReady = false;
+		boolean isAccept = false;
 		public InventoryTrade tradeInventory;
 
 		public Trader(EntityPlayer player)
 		{
 			this.player = player;
+			this.tradeInventory = new InventoryTrade(player);
+			// uuid = player.getUniqueID();
+			// entityId = player.getEntityId();
 		}
 
 		public boolean hasPlaceToExchange()

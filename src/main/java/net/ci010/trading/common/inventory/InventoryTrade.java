@@ -8,7 +8,7 @@ import net.minecraft.util.IChatComponent;
 
 public class InventoryTrade implements IInventory
 {
-	private ItemStack[] stacks = new ItemStack[12];
+	private ItemStack[] stacks = new ItemStack[9];
 	private EntityPlayer owner;
 
 	public InventoryTrade getClone() throws CloneNotSupportedException

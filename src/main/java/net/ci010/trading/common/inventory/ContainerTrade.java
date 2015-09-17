@@ -16,13 +16,24 @@ public class ContainerTrade extends Container
 	{
 		this.trade = trade;
 
+		if (trade == null)
+			System.out.println("trade is null");
+		else if (trade.initiator == null)
+			System.out.println("initiator is null");
+		else if (trade.invitee == null)
+			System.out.println("invitee is null");
+		else if (trade.initiator.tradeInventory == null)
+			System.out.println("initiator inv is null");
+		else if (trade.invitee.tradeInventory == null)
+			System.out.println("invitee inv is null");
+		
 		int i;
 
 		for (i = 0; i < 3; ++i)
 		{
 			for (int j = 0; j < 3; ++j)
 			{
-				int index = j + i * 3 + 45;
+				int index = j + i * 3;// + 45;
 				this.addSlotToContainer(new SlotTrade(trade.initiator.tradeInventory, index, 8 + j * 18, 6 + i * 18));
 			}
 		}
@@ -31,7 +42,7 @@ public class ContainerTrade extends Container
 		{
 			for (int j = 0; j < 3; ++j)
 			{
-				int index = j + i * 3 + 54;
+				int index = j + i * 3;// + 54;
 				this.addSlotToContainer(new SlotTrade(trade.invitee.tradeInventory, index, 116 + j * 18, 8 + 6 + i * 18));
 			}
 		}
@@ -64,6 +75,7 @@ public class ContainerTrade extends Container
 	@Override
 	public void onContainerClosed(EntityPlayer playerIn)
 	{
+		System.out.println("contianer close for "+playerIn.getName());
 		if (trade == null)
 			return;
 		if (playerIn.equals(trade.initiator.player))
@@ -84,7 +96,7 @@ public class ContainerTrade extends Container
 				player.inventory.mainInventory[player.inventory.getFirstEmptyStack()] = remainItem;
 		}
 	}
-	
+
 	public Trade getTrade()
 	{
 		return this.trade;

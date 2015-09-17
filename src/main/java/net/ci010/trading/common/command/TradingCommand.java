@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class TradingCommand extends CommandBase
 {
+	
 	@Override
 	public String getName()
 	{
@@ -25,6 +26,7 @@ public class TradingCommand extends CommandBase
 	public void execute(ICommandSender sender, String[] args)
 			throws CommandException
 	{
+		System.out.println("execute trade command");
 		EntityPlayer invitee;
 		if(args.length==1)
 		{
@@ -37,7 +39,7 @@ public class TradingCommand extends CommandBase
 				throw new CommandException("trade.command.exception.noname");
 			}
 			
-			TradingSystem.startATrade(getPlayer(sender, sender.getName()), invitee);
+			TradingSystem.inviteATrade(getPlayer(sender, sender.getName()), invitee);
 		}
 		else
 			throw new CommandException("trade.command.exception.usage");
